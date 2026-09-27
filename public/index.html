@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Sweet Scoop Ice Cream</title>
+
+    <link
+        rel="stylesheet"
+        href="/static/style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <header>
+
+        <nav class="navbar">
+
+            <div class="logo">
+                Sweet Scoop
+            </div>
+
+
+            <div class="nav-links">
+
+                <a href="#home">
+                    Home
+                </a>
+
+                <a href="#menu">
+                    Menu
+                </a>
+
+                <a href="#about">
+                    About
+                </a>
+
+                <a href="#contact">
+                    Contact
+                </a>
+
+            </div>
+
+
+            <button
+                class="cart-button"
+                onclick="showCart()"
+            >
+
+                Cart
+                <span id="cart-count">
+                    0
+                </span>
+
+            </button>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <section
+        id="home"
+        class="hero"
+    >
+
+        <div class="hero-content">
+
+            <p class="small-title">
+                FRESH • CREAMY • DELICIOUS
+            </p>
+
+
+            <h1>
+                Happiness Served
+                <br>
+                One Scoop at a Time
+            </h1>
+
+
+            <p>
+                Discover delicious handcrafted ice creams
+                made with fresh ingredients and lots of love.
+            </p>
+
+
+            <a
+                href="#menu"
+                class="hero-button"
+            >
+                Explore Our Menu
+            </a>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         MENU
+    ========================== -->
+
+    <section
+        id="menu"
+        class="menu-section"
+    >
+
+        <div class="section-heading">
+
+            <p>
+                OUR MENU
+            </p>
+
+            <h2>
+                Pick Your Favorite
+            </h2>
+
+        </div>
+
+
+        <!-- JavaScript will load products here -->
+
+        <div
+            id="menu-container"
+            class="icecream-container"
+        >
+
+            <p class="loading">
+                Loading delicious ice cream...
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         ABOUT
+    ========================== -->
+
+    <section
+        id="about"
+        class="about-section"
+    >
+
+        <div>
+
+            <p class="small-title">
+                ABOUT US
+            </p>
+
+
+            <h2>
+                Made With Love
+            </h2>
+
+
+            <p>
+                At Sweet Scoop, we believe ice cream should be
+                more than just dessert. Every scoop is prepared
+                using carefully selected ingredients to create
+                a delicious experience.
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         CONTACT
+    ========================== -->
+
+    <section
+        id="contact"
+        class="contact-section"
+    >
+
+        <h2>
+            Visit Sweet Scoop
+        </h2>
+
+
+        <p>
+            Come enjoy your favorite flavor with us.
+        </p>
+
+
+        <button
+            onclick="showMessage()"
+        >
+            Contact Us
+        </button>
+
+    </section>
+
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        <p>
+            © 2026 Sweet Scoop Ice Cream Parlor
+        </p>
+
+    </footer>
+
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="/static/script.js"></script>
+
+</body>
+
+</html>
