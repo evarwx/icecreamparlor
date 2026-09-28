@@ -1,66 +1,50 @@
 let cart = [];
 
-
 // ==========================================
 // LOAD MENU FROM FASTAPI
 // ==========================================
 
 async function loadMenu() {
+    const menuContainer = document.getElementById("menu-container");
 
-    const menuContainer =
-        document.getElementById("menu-container");
-
+    if (!menuContainer) {
+        console.error("menu-container not found");
+        return;
+    }
 
     try {
-
-        const response =
-            await fetch("/api/menu");
-
+        const response = await fetch("/api/menu");
 
         if (!response.ok) {
-
-            throw new Error(
-                "Failed to load menu"
-            );
-
+            throw new Error("Failed to load menu");
         }
 
-
-        const data =
-            await response.json();
-
+        const data = await response.json();
 
         menuContainer.innerHTML = "";
 
+        if (!data.items || data.items.length === 0) {
+            menuContainer.innerHTML = `
+                <p class="loading">
+                    No ice creams available.
+                </p>
+            `;
+            return;
+        }
 
         data.items.forEach(item => {
+            const card = document.createElement("div");
 
-            const card =
-                document.createElement("div");
-
-
-            card.className =
-                "icecream-card";
-
+            card.className = "icecream-card";
 
             card.innerHTML = `
-
                 <div class="icecream-image">
-
                     ${getIceCreamIcon(item.id)}
-
                 </div>
 
+                <h3>${item.name}</h3>
 
-                <h3>
-                    ${item.name}
-                </h3>
-
-
-                <p>
-                    ${item.description}
-                </p>
-
+                <p>${item.description}</p>
 
                 <div class="product-bottom">
 
@@ -68,50 +52,32 @@ async function loadMenu() {
                         ₹${item.price}
                     </span>
 
-
-                    <button
-                        onclick="
-                            addToCart(
-                                '${item.name}',
-                                ${item.price}
-                            )
-                        "
-                    >
+                    <button class="add-button">
                         Add
                     </button>
 
                 </div>
-
             `;
 
+            const addButton = card.querySelector(".add-button");
+
+            addButton.addEventListener("click", () => {
+                addToCart(item.name, item.price);
+            });
 
             menuContainer.appendChild(card);
-
         });
 
-
     } catch (error) {
-
-        console.error(
-            "Menu loading error:",
-            error
-        );
-
+        console.error("Menu loading error:", error);
 
         menuContainer.innerHTML = `
-
             <p class="loading">
-
                 Unable to load menu.
-
                 Please try again.
-
             </p>
-
         `;
-
     }
-
 }
 
 
@@ -120,22 +86,14 @@ async function loadMenu() {
 // ==========================================
 
 function getIceCreamIcon(id) {
-
     const icons = {
-
         1: "🍦",
-
         2: "🍓",
-
         3: "🍫",
-
         4: "🥭"
-
     };
 
-
     return icons[id] || "🍨";
-
 }
 
 
@@ -146,21 +104,13 @@ function getIceCreamIcon(id) {
 function addToCart(name, price) {
 
     cart.push({
-
         name: name,
-
-        price: price
-
+        price: Number(price)
     });
-
 
     updateCart();
 
-
-    alert(
-        `${name} added to cart!`
-    );
-
+    alert(`${name} added to cart!`);
 }
 
 
@@ -171,14 +121,13 @@ function addToCart(name, price) {
 function updateCart() {
 
     const cartCount =
-        document.getElementById(
-            "cart-count"
-        );
+        document.getElementById("cart-count");
 
+    if (!cartCount) {
+        return;
+    }
 
-    cartCount.textContent =
-        cart.length;
-
+    cartCount.textContent = cart.length;
 }
 
 
@@ -189,45 +138,29 @@ function updateCart() {
 function showCart() {
 
     if (cart.length === 0) {
-
-        alert(
-            "Your cart is empty."
-        );
-
+        alert("Your cart is empty.");
         return;
-
     }
 
-
-    let message =
-        "Your Cart:\n\n";
-
-
+    let message = "Your Cart:\n\n";
     let total = 0;
-
 
     cart.forEach((item, index) => {
 
         message +=
             `${index + 1}. ${item.name} - ₹${item.price}\n`;
 
-
-        total += item.price;
-
+        total += Number(item.price);
     });
 
-
-    message +=
-        `\nTotal: ₹${total}`;
-
+    message += `\nTotal: ₹${total}`;
 
     alert(message);
-
 }
 
 
 // ==========================================
-// CONTACT
+// CONTACT MESSAGE
 // ==========================================
 
 function showMessage() {
@@ -235,7 +168,25 @@ function showMessage() {
     alert(
         "Thank you for contacting Sweet Scoop!"
     );
+}
 
+
+// ==========================================
+// CLEAR CART
+// ==========================================
+
+function clearCart() {
+
+    if (cart.length === 0) {
+        alert("Your cart is already empty.");
+        return;
+    }
+
+    cart = [];
+
+    updateCart();
+
+    alert("Cart cleared!");
 }
 
 
@@ -243,4 +194,10 @@ function showMessage() {
 // START APPLICATION
 // ==========================================
 
-loadMenu();
+document.addEventListener("DOMContentLoaded", () => {
+
+    loadMenu();
+
+    updateCart();
+
+});
