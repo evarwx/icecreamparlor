@@ -1,13 +1,7 @@
-from pathlib import Path
-
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
-from fastapi.staticfiles import StaticFiles
+from pathlib import Path
 
-
-# ==========================================
-# APPLICATION
-# ==========================================
 
 app = FastAPI(
     title="Sweet Scoop API",
@@ -16,31 +10,10 @@ app = FastAPI(
 )
 
 
-# ==========================================
-# PATHS
-# ==========================================
-
 BASE_DIR = Path(__file__).resolve().parent
-
 PUBLIC_DIR = BASE_DIR / "public"
-
 INDEX_FILE = PUBLIC_DIR / "index.html"
 
-
-# ==========================================
-# STATIC FILES
-# ==========================================
-
-app.mount(
-    "/static",
-    StaticFiles(directory=PUBLIC_DIR),
-    name="static"
-)
-
-
-# ==========================================
-# ICE CREAM DATA
-# ==========================================
 
 ice_creams = [
     {
@@ -70,18 +43,10 @@ ice_creams = [
 ]
 
 
-# ==========================================
-# FRONTEND
-# ==========================================
-
 @app.get("/")
 def home_page():
     return FileResponse(INDEX_FILE)
 
-
-# ==========================================
-# API
-# ==========================================
 
 @app.get("/api")
 def api_home():
@@ -102,11 +67,9 @@ def get_menu():
 def get_menu_item(item_id: int):
 
     for item in ice_creams:
-
         if item["id"] == item_id:
             return item
 
     return {
         "error": "Ice cream not found"
     }
-    
